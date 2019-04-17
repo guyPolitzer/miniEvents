@@ -1,0 +1,105 @@
+<div mat-dialog-title class="dialogTitle"  fxLayout="column" fxLayoutAlign="start center" dir="rtl">
+  <div class="closeBox" fxLayout="row" fxLayoutAlign="end center">
+      <div>
+          <button class="submitButton" (click)="dialogAction('close')">
+              <mat-icon>close</mat-icon>
+          </button>
+      </div>
+  </div>
+  <div class="title">
+      הוספת ספק חדש
+  </div>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-content fxLayout="column" fxLayoutAlign="start center" dir="rtl">
+  <form [formGroup]="newForm" class="example-form" fxLayout="column" fxLayoutAlign="space-around center">
+      <div class="inputRow">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="שם" [formControlName]="'name'">
+          <mat-error *ngIf="newForm.controls['name'].hasError('required')">
+            שדה זה הינו שדה חובה
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="inputRow" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="smallInput">
+           <mat-form-field class="example-full-width">
+            <input matInput placeholder="טלפון" [formControlName]="'phone'">
+            <mat-error *ngIf="newForm.controls['phone'].hasError('pattern')">
+              מספר טלפון לא חוקי, נא להכניס ספרות בלבד
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="smallInput">
+            <mat-form-field class="example-full-width">
+             <input matInput placeholder="דוא״ל" [formControlName]="'email'">
+             <mat-error *ngIf="newForm.controls['email'].hasError('pattern')">
+                כתובת מייל לא חוקית
+              </mat-error>
+           </mat-form-field>
+         </div>
+      </div>
+      <div class="inputRow">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="כתובת" [formControlName]="'address'">
+        </mat-form-field>
+      </div>
+      <div class="inputRow" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="smallInput">
+            <mat-form-field class="example-full-width">
+            <input matInput placeholder="Facebook" [formControlName]="'facebook'">
+          </mat-form-field>
+        </div>
+        <div class="smallInput">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="אתר" [formControlName]="'website'">
+            </mat-form-field>
+          </div>
+      </div>
+      <div class="inputRow">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="מוצרים" [formControlName]="'products'">
+        </mat-form-field>
+      </div>
+      <div class="inputRow">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="שירותים" [formControlName]="'services'">
+        </mat-form-field>
+      </div>
+      <div class="inputRow" *ngIf="categories.length>0">
+        <mat-form-field>
+          <mat-label>קטגוריות</mat-label>
+          <mat-select [formControlName]="'categoryIds'" multiple>
+            <mat-option *ngFor="let item of categories" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="inputRow" *ngIf="regions.length>0">
+        <mat-form-field>
+          <mat-label>אזורים</mat-label>
+          <mat-select [formControlName]="'subRegionId'" >
+            <mat-option *ngFor="let item of regions" [value]="item.id">{{item.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="inputRow delivery">
+          <mat-slide-toggle
+          [formControlName]="'delivery'">
+          משלוחים
+      </mat-slide-toggle>
+      </div>
+  </form>
+</div>
+<div mat-dialog-actions fxLayout="column" fxLayoutAlign="start center" dir="rtl">
+  <div class="buttonsRow" fxLayout="row" fxLayoutAlign="space-around center">
+    <div fxLayout="row" fxLayoutAlign="space-around center" (click)="dialogAction('submit')">
+        <button class="submitButton">הוסף</button>  
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-around center" (click)="dialogAction('clear')">
+      <button class="submitButton">נקה</button>  
+    </div>
+  </div>  
+  <div class="error" *ngIf="error">
+    בעייה בהזנת נתונים, נא פנה לתמיכה
+  </div>
+</div>  

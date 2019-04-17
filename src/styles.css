@@ -1,0 +1,90 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/indigo-pink.css";
+@import "./assets/fontawesome-free-5.1.0/css/all.css";
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
+input:focus {
+    outline:0 !important;
+}
+button:focus{
+    outline:0 !important;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.mat-button:focus, .mat-button:hover {
+    outline:0 !important;
+    background-color: transparent !important;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.mat-button, .mat-flat-button, .mat-icon-button, .mat-stroked-button {
+    box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0;
+    min-width: unset;
+    line-height: 0;
+    padding: 0;
+    border-radius: 0;
+    overflow: visible;
+}
+
+body { 
+    margin:0px;
+    padding:0px;
+    position: absolute;
+    left:0;
+    top:0;
+    overflow: hidden;
+    width:100%;
+    height:100%;
+    background-color: var( --main-background);
+    /* background: -webkit-radial-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.7));
+	background: -moz-radial-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.7));
+	background: -ms-radial-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.7));
+	background: radial-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 0.7)); */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    /* font-family: 'Raleway', sans-serif; */
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+::-webkit-scrollbar-track
+{
+	background-color: #57575c8c;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar
+{
+	width: 6px;
+    background-color: #333339;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #9e9e9e;
+    border-radius: 3px;
+}

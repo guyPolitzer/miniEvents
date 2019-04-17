@@ -1,0 +1,54 @@
+<div class="container" fxLayout="column" fxLayoutAlign="start center" dir="rtl">
+  <div class="Title" fxLayout="column" fxLayoutAlign="end center">
+    <div>
+        Events MMS
+    </div>
+  </div>
+  <div class="progressBarBox" >
+    <mat-progress-bar dir="rtl" class="progressBar" value="{{loadingPercentage}}" mode="determinate" ></mat-progress-bar>
+  </div>
+  <div class="loginBox" fxLayout="column" fxLayoutAlign="center center" >
+    <mat-card class="card" fxLayout="column" fxLayoutAlign="space-around center" *ngIf="!startSpinner">
+      <mat-card-header>
+        <mat-card-title>כניסה למערכת</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="loginForm" class="example-form" fxLayout="column" fxLayoutAlign="space-around center">
+          <div class="inputRow">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="כתובת מייל" [formControlName]="'email'">
+              <mat-error *ngIf="loginForm.controls['email'].hasError('pattern') && !loginForm.controls['email'].hasError('required')">
+                כתובת מייל לא חוקית
+              </mat-error>
+              <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+                שדה זה הינו שדה חובה
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="inputRow">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="סיסמא" [formControlName]="'password'">
+              <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+                שדה זה הינו שדה חובה
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="space-around center" *ngIf="loginResult=='' || loginResult=='fail'">
+        <button mat-button (click)="loginAction('submit')">כנס</button>
+        <button mat-button (click)="loginAction('clear')">מחק</button>
+      </mat-card-actions>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="space-around center" *ngIf="loginResult=='error'">
+        בעייה בכניסה, נא פנה לתמיכה
+      </mat-card-actions>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="space-around center" *ngIf="loginResult=='fail'">
+        אחד נתונים לא נכונים נסה שוב
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<div class="pyro"  *ngIf="startSpinner">
+  <div class="before"></div>
+  <div class="after"></div>
+</div>

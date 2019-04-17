@@ -1,0 +1,11 @@
+<div class="container">
+  <login
+    *ngIf="startScreen"
+    [configData]="configData"
+    (onLoginOk)="loginOk($event)"
+  ></login>
+  <workdesk
+    *ngIf="!startScreen"
+    [configData]="configData"
+  ></workdesk>
+</div>
