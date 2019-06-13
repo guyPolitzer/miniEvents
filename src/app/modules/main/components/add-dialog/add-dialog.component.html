@@ -6,13 +6,19 @@
           </button>
       </div>
   </div>
-  <div class="title">
+  <div class="title" *ngIf="type== 'suppliers'">
       הוספת ספק חדש
+  </div>
+  <div class="title" *ngIf="type== 'products'">
+      הוספת מוצר חדש
+  </div>
+  <div class="title" *ngIf="type== 'categories'">
+      הוספת קטגוריה חדש
   </div>
 </div>
 <mat-divider></mat-divider>
 <div mat-dialog-content fxLayout="column" fxLayoutAlign="start center" dir="rtl">
-  <form [formGroup]="newForm" class="example-form" fxLayout="column" fxLayoutAlign="space-around center">
+  <form [formGroup]="newForm" class="example-form" fxLayout="column" fxLayoutAlign="space-around center" *ngIf="type== 'suppliers'">
       <div class="inputRow">
         <mat-form-field class="example-full-width">
           <input matInput placeholder="שם" [formControlName]="'name'">
@@ -27,6 +33,9 @@
             <input matInput placeholder="טלפון" [formControlName]="'phone'">
             <mat-error *ngIf="newForm.controls['phone'].hasError('pattern')">
               מספר טלפון לא חוקי, נא להכניס ספרות בלבד
+            </mat-error>
+            <mat-error *ngIf="newForm.controls['phone'].hasError('required')">
+              שדה זה הינו שדה חובה
             </mat-error>
           </mat-form-field>
         </div>
@@ -59,6 +68,9 @@
       <div class="inputRow">
         <mat-form-field class="example-full-width">
           <input matInput placeholder="מוצרים" [formControlName]="'products'">
+          <mat-error *ngIf="newForm.controls['products'].hasError('required')">
+            שדה זה הינו שדה חובה
+          </mat-error>
         </mat-form-field>
       </div>
       <div class="inputRow">
@@ -66,21 +78,29 @@
           <input matInput placeholder="שירותים" [formControlName]="'services'">
         </mat-form-field>
       </div>
-      <div class="inputRow" *ngIf="categories.length>0">
+      <div class="inputRow"  fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="smallInput">
+          <mat-form-field>
+            <mat-label>קטגוריות</mat-label>
+            <mat-select [formControlName]="'categoryIds'" multiple>
+              <mat-option *ngFor="let item of categories" [value]="item.id">{{item.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="newForm.controls['categoryIds'].hasError('required')">
+              שדה זה הינו שדה חובה
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="smallInput">
         <mat-form-field>
-          <mat-label>קטגוריות</mat-label>
-          <mat-select [formControlName]="'categoryIds'" multiple>
-            <mat-option *ngFor="let item of categories" [value]="item.id">{{item.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="inputRow" *ngIf="regions.length>0">
-        <mat-form-field>
-          <mat-label>אזורים</mat-label>
+          <mat-label>אזור</mat-label>
           <mat-select [formControlName]="'subRegionId'" >
             <mat-option *ngFor="let item of regions" [value]="item.id">{{item.name}}</mat-option>
           </mat-select>
+          <mat-error *ngIf="newForm.controls['subRegionId'].hasError('required')">
+            שדה זה הינו שדה חובה
+          </mat-error>
         </mat-form-field>
+        </div>
       </div>
       <div class="inputRow delivery">
           <mat-slide-toggle
@@ -88,6 +108,37 @@
           משלוחים
       </mat-slide-toggle>
       </div>
+  </form>
+  <form [formGroup]="productsForm" class="example-form" fxLayout="column" fxLayoutAlign="space-around center" *ngIf="type== 'products'">
+    <div class="inputRow">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="שם" [formControlName]="'name'">
+        <mat-error *ngIf="productsForm.controls['name'].hasError('required')">
+          שדה זה הינו שדה חובה
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="inputRow">
+      <mat-form-field>
+        <mat-label>קטגוריות</mat-label>
+        <mat-select [formControlName]="'category'">
+          <mat-option *ngFor="let item of categories" [value]="item.id">{{item.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="productsForm.controls['category'].hasError('required')">
+          שדה זה הינו שדה חובה
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+  <form [formGroup]="categoryForm" class="example-form" fxLayout="column" fxLayoutAlign="space-around center" *ngIf="type== 'categories'">
+    <div class="inputRow">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="שם" [formControlName]="'name'">
+        <mat-error *ngIf="categoryForm.controls['name'].hasError('required')">
+          שדה זה הינו שדה חובה
+        </mat-error>
+      </mat-form-field>
+    </div>
   </form>
 </div>
 <div mat-dialog-actions fxLayout="column" fxLayoutAlign="start center" dir="rtl">

@@ -14,17 +14,31 @@ export class WorkdeskService {
     private _http: HttpClient,
   ) { }
 
-  getData(type,configData) {
-    let url = `${configData.mainURL}/admin/api/`;
+  getData(type,subType,configData) {
+    let url = configData.mainURL;
     switch (type) {
       case 'suppliers' :
-        url = `${url}suppliers`;
+        switch (subType) {
+          case 'suppliers' :
+            url = `${url}/admin/api/suppliers`;
+            break;
+          case 'categories' : 
+            url = `${url}/admin/api/suppliers/categories`;
+            break;
+          case 'regions' :
+            url = `${url}/admin/api/suppliers/regions`;
+            break;
+        }
         break;
-      case 'categories' : 
-        url = `${url}suppliers/categories`;
-        break;
-      case 'regions' :
-        url = `${url}suppliers/regions`;
+      case 'products' : 
+        switch (subType) {
+          case 'products' :
+            url = `${url}/guy/products`;
+            break;
+          case 'categories' : 
+            url = `${url}/guy/products/categories`;
+            break;
+        }
         break;
     }
     let header = {
@@ -35,24 +49,41 @@ export class WorkdeskService {
         .get(url,header);
   }
 
-  setData(data,configData) {
+  setData(type,data,configData) {
+    let url = configData.mainURL;
+    let body;
     let header = {
       headers: new HttpHeaders()
         .set('Authorization', 'Token '+configData.token)
     }
-    let url = `${configData.mainURL}/admin/api/suppliers`;
-    let body = new HttpParams()
-    .set('name',  data.name)
-    .set('email', data.email)
-    .set('phone', data.phone)
-    .set('products', data.products)
-    .set('services', data.services)
-    .set('website', data.website)
-    .set('facebook', data.facebook)
-    .set('subRegionId', data.subRegionId)
-    .set('address', data.address)
-    .set('delivery', data.delivery)
-    .set('categoryIds', data.categoryIds)
+    switch (type) {
+      case 'suppliers' :
+        url = `${url}/admin/api/suppliers`;
+        body = new HttpParams()
+          .set('name',  data.name)
+          .set('email', data.email)
+          .set('phone', data.phone)
+          .set('products', data.products)
+          .set('services', data.services)
+          .set('website', data.website)
+          .set('facebook', data.facebook)
+          .set('subRegionId', data.subRegionId)
+          .set('address', data.address)
+          .set('delivery', data.delivery)
+          .set('categoryIds', data.categoryIds)
+        break;
+      case 'products' :
+        url = `${url}/guy/products`;
+        body = new HttpParams()
+          .set('name',  data.name)
+          .set('categoryId',  data. category)
+        break;
+      case 'categories' : 
+        url = `${url}/guy/products/categories`;
+        body = new HttpParams()
+          .set('name',  data.name)
+        break;
+    }
     return this._http
         .post(url,body,header)
   } 

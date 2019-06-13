@@ -14,8 +14,12 @@ import { AddDialogComponent } from 'src/app/modules/main/components/add-dialog/a
 export class WorkdeskComponent implements OnInit {
   @Input() configData;
   public dataSource = new MatTableDataSource();
-  public displayedColumns: string[] = ['name','phone','email','address','facebook','website','products','services','categories','subRegion','deliveries']; 
+  public displayedColumns: string[] = [];
+  public displayedColumnsSuppliers: string[] = ['name','phone','email','address','facebook','website','products','services','categories','subRegion','deliveries']; 
+  public displayedColumnsProducts: string[] = ['name','category']; 
+  public displayedColumnsCategories: string[] = ['name']; 
   public process: boolean = true;;
+  public menuItem: string = 'suppliers';
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -25,30 +29,57 @@ export class WorkdeskComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.workdeskService.getData('suppliers',this.configData).subscribe((data: any) => {
-      this.dataSource.data = data.concat(data);
-      this.process = false;
-     });
+    this.getList(this.menuItem);
   }
 
+  getList(type) {
+    this.process = true;
+    console.log('list type => ',type);
+    switch (type) {
+      case 'suppliers' :
+        this.workdeskService.getData('suppliers','suppliers',this.configData).subscribe((data: any) => {
+          this.dataSource.data = data.map(item=>item);
+          this.process = false;
+          this.displayedColumns = this.displayedColumnsSuppliers;
+        });
+        break;
+      case 'products' :
+        this.workdeskService.getData('products','products',this.configData).subscribe((data: any) => {
+          this.dataSource.data = data.map(item=>item);
+          this.process = false;
+          this.displayedColumns = this.displayedColumnsProducts;
+        });
+        break;
+      case 'categories' :
+        this.workdeskService.getData('products','categories',this.configData).subscribe((data: any) => {
+          this.dataSource.data = data.map(item=>item);
+          this.process = false;
+          this.displayedColumns = this.displayedColumnsCategories;
+        });
+        break;
+     
+    }
+  }
+
+  setMeuwItem(type) {
+    if(type != this.menuItem) {
+      this.menuItem = type;
+      console.log('list type => ',type);
+      this.getList(type);
+    }
+  }
   addNew() {
     const dialogRef = this.dialog.open(AddDialogComponent, {
       width: '45vw',
       data: {
         configData : this.configData,
+        type : this.menuItem
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('dialog was closed, result => ',result);
       if(result) {
-        this.process = true;
-        setTimeout(()=> {
-           this.workdeskService.getData('suppliers',this.configData).subscribe((data: any) => {
-             this.dataSource.data = data
-             this.process = false;
-            });
-        },2000)
-       
+        this.getList(this.menuItem);
       }
     });
   }
